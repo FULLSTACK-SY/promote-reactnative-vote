@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import ApiUrl from './settings'
 
-export default function App() {
+
+export default App = () => {
+  const [text, setText] = useState(null)
+  useEffect(() => {
+    fetch(`${ApiUrl}/test`)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        const { test } = responseJson
+        setText(test)
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [])
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>{ text }</Text>
     </View>
   );
 }
